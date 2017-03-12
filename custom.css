@@ -32,12 +32,12 @@ h3 {
   cursor: pointer;
 }
 
-div.circle:nth-child(even) {
+.circle:nth-child(even) {
   float: right;
   margin-right: 14%;
 }
 
-div.circle:nth-child(odd) {
+.circle:nth-child(odd) {
   margin-left: 14%;
 }
 
@@ -82,7 +82,7 @@ input[type=number]::-webkit-outer-spin-button {
   font-size: 1em;
 }
 
-.white-box .total-field {
+.total-field {
   width: 76%;
   height: 43px;
   font-size: 1.6em;
@@ -91,7 +91,7 @@ input[type=number]::-webkit-outer-spin-button {
   text-align: right;
 }
 
-.white-box button.calculate-btn {
+button.calculate-btn {
   background-color: #222222;
   color: #fafafa;
   border: none;
@@ -102,3 +102,8 @@ input[type=number]::-webkit-outer-spin-button {
   cursor: pointer;
   margin-top: 32px;
 }
+
+.hidden {
+  display: none;
+}
+
