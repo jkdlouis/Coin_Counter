@@ -3,6 +3,8 @@
 (function () {
     document.addEventListener('DOMContentLoaded', function() {
       var total = 0;
+      var remainder;
+      var count;
 
       var circleList = document.getElementsByClassName('circle');
       var coinOne = document.getElementById('coinOne');
@@ -24,35 +26,35 @@
         });
       }
 
-      document.getElementById('calculate').addEventListener('click', function(count) {
-        var remainder = 0;
-
-        if(coinArray[0] > 0) {
-          count = Math.floor(total / coinArray[0]);
-          remainder = total - count * coinArray[0];
-          total = remainder;
-          coinOne.nextElementSibling.firstElementChild.innerText = count;
-        }
-        if(coinArray[1] > 0) {
-          count = Math.floor(total / coinArray[1]);
-          remainder = total - count * coinArray[1];
-          total = remainder;
-          coinTwo.nextElementSibling.firstElementChild.innerText = count;
-        }
-        if(coinArray[2] > 0) {
-          count = Math.floor(total / coinArray[2]);
-          remainder = total - count * coinArray[2];
-          total = remainder;
-          coinThree.nextElementSibling.firstElementChild.innerText = count;
-        }
-        if(coinArray[3] > 0) {
-          count = total;
-          coinFour.nextElementSibling.firstElementChild.innerText = count;
+        document.getElementById('calculate').addEventListener('click', function() {
+        while(coinArray[0] > 0) {
+            count = Math.floor(total / coinArray[0]);
+            coinTwo.nextElementSibling.firstElementChild.innerText = count;
+          remainder = total % coinArray[0];
+          if(remainder > 0) {
+            count = Math.floor(remainder / coinArray[1]);
+            remainder = total % coinArray[1];
+            coinOne.nextElementSibling.firstElementChild.innerText = count;
+            if(remainder > 0) {
+              count = Math.floor(remainder / coinArray[2]);
+              remainder = total % coinArray[2];
+              coinFour.nextElementSibling.firstElementChild.innerText = count;
+              if(remainder > 0) {
+                count = Math.floor(remainder / coinArray[3]);
+                remainder = total % coinArray[3];
+                coinThree.nextElementSibling.firstElementChild.innerText = count;
+              } else if(remainder === 0) {
+                coinThree.nextElementSibling.firstElementChild.innerText = '';
+              }
+            }
+          }
+          break;
         }
       });
 
       function setupNotification(element) {
         document.getElementById('calculate').addEventListener('click', function() {
+          //setupNotificationValue(element);
           if(element.lastElementChild.firstElementChild.innerText) {
               element.lastElementChild.classList.remove('hidden');
           }
