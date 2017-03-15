@@ -1,20 +1,41 @@
 'use strict';
 
-(function () {
+(function() {
     document.addEventListener('DOMContentLoaded', function() {
       var total = 0;
 
       var circleList = document.getElementsByClassName('circle');
-      var coinOne = document.getElementById('coinOne');
-      var coinTwo = document.getElementById('coinTwo');
-      var coinThree = document.getElementById('coinThree');
-      var coinFour = document.getElementById('coinFour');
 
       var coinArray = [];
-      coinArray.push(coinOne.value, coinTwo.value, coinThree.value, coinFour.value);
-      coinArray.sort(function(a, b) {
-        return b-a
-      });
+
+      var coinOne   = document.getElementById('coinOne'),
+          coinTwo   = document.getElementById('coinTwo'),
+          coinThree = document.getElementById('coinThree'),
+          coinFour  = document.getElementById('coinFour');
+
+      function setupCoinArray(element) {
+        coinArray.push(Number(element.firstElementChild.value));
+        coinArray.sort(function(a, b) {
+          return b - a;
+        });
+      }
+
+      function coinArrayHandler(element) {
+        setupCoinArray(element);
+        element.firstElementChild.addEventListener('blur', function() {
+          var number = Number(element.firstElementChild.value);
+          if(number >= coinArray[0] || number < coinArray[0]) {
+            coinArray.splice(0, 1, number);
+
+          }else if(number >= coinArray[1] || number < coinArray[1]) {
+            coinArray.splice(1, 1, number);
+
+          }else if(number >= coinArray[2] || number < coinArray[2]) {
+            coinArray.splice(2, 1, number);
+
+          }
+        });
+      }
 
       function setupTotalHandler(element) {
         element.addEventListener('click', function() {
@@ -53,16 +74,18 @@
 
       function setupNotification(element) {
         document.getElementById('calculate').addEventListener('click', function() {
-          if(element.lastElementChild.firstElementChild.innerText) {
-              element.lastElementChild.classList.remove('hidden');
+          var count = Number(element.lastElementChild.firstElementChild.innerText);
+          if(count != 0) {
+            element.lastElementChild.classList.remove('hidden');
           }
         });
       }
-      for (var i =0; i < circleList.length; i++) {
+
+      for(var i = 0; i < circleList.length; i++) {
         var element = circleList[i];
+        coinArrayHandler(element);
         setupTotalHandler(element);
         setupNotification(element);
       }
     });
-  }
-)();
+  })();
